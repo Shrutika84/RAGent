@@ -11,7 +11,7 @@ Build a chatbot that:
 - Supports categorization, analytics, and calendar integration.
 - Offers a complete RESTful API system with JSON responses.
 
----
+
 
 ## 📊 System Architecture (Mermaid Diagram)
 
