@@ -1,0 +1,17 @@
+FastAPI
+pandas
+numpy
+uvicorn
+httpx
+python-dotenv
+pydantic
+sqlalchemy
+sqlite-utils
+sentence-transformers
+faiss-cpu
+pdfplumber
+pymupdf
+uuid
+tqdm
+pytest
+langchain
