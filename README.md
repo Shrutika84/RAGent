@@ -2,30 +2,29 @@
 Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assistant to capture, store, and retrieve user information throughout the chat interaction.
 
 ## 📊 Architecture (Mermaid)
-```mermaid
-graph TD
+  graph TD
   subgraph Client
-    A[User]
+    U[User]
   end
 
   subgraph API
-    A --> B[Chatbot API (/chat)]
-    B --> C[LLM (OpenAI GPT)]
-    B --> D[RAG Retriever]
-    B --> E[CRM Logger]
+    CHAT[Chatbot API - /chat] --> GPT[LLM - OpenAI GPT]
+    CHAT --> RAG[RAG Retriever]
+    CHAT --> CRM[CRM Logger]
   end
 
-  subgraph RAG System
-    D --> F[Vector Store (FAISS)]
-    D --> G[Embedded Docs (from /upload_docs)]
+  subgraph RAG_System
+    RAG --> FAISS[Vector Store - FAISS]
+    RAG --> DOCS[Embedded Docs - /upload_docs]
   end
 
-  subgraph CRM Database
-    E --> H[Users Table]
-    E --> I[Conversation Logs]
-    E --> J[Calendar Events]
+  subgraph CRM_Database
+    CRM --> USERS[Users Table]
+    CRM --> LOGS[Conversation Logs]
+    CRM --> EVENTS[Calendar Events]
   end
-```
+
+  U --> CHAT
 
 ## 🚀 Installation & Setup
 

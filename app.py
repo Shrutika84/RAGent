@@ -27,12 +27,12 @@ local_css("""
     }
 """)
 
-API_URL = "http://127.0.0.1:8000"  # update if deployed
+API_URL = "http://127.0.0.1:8000"  # WHEN YOU RUN THE LOCAL``
 
-st.set_page_config(page_title="Okada AI Assistant", layout="centered")
+st.set_page_config(page_title="RAGent", layout="centered")
 
 st.markdown(
-    "<h1 style='text-align: center; color: #D4AF37;'>🏢 Okada AI Assistant</h1>",
+    "<h1 style='text-align: center; color: #D4AF37;'>RAGent</h1>",
     unsafe_allow_html=True
 )
 st.markdown(
