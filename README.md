@@ -32,7 +32,7 @@ Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assi
    uvicorn main:app --reload
    ```
 
-6. Open Swagger UI at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+6. Open Swagger UI {URL/docs}
 
 ## 📡 API Endpoints
 
