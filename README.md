@@ -1,6 +1,18 @@
 # RAGent- Multi-Agentic Conversational AI System
 Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assistant to capture, store, and retrieve user information throughout the chat interaction.
 
+
+##  Project Objective
+
+Build a chatbot that:
+- Accepts user messages and retrieves relevant internal documents using RAG.
+- Responds contextually via LLM (OpenAI GPT).
+- Captures user metadata and chat logs in a CRM.
+- Supports categorization, analytics, and calendar integration.
+- Offers a complete RESTful API system with JSON responses.
+
+---
+
 ## 📊 System Architecture (Mermaid Diagram)
 
 <img width="3840" height="1714" alt="Untitled diagram _ Mermaid Chart-2025-07-13-204052" src="https://github.com/user-attachments/assets/eb61b363-035a-4df2-8645-4975d4d3d431" />
