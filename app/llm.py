@@ -10,7 +10,8 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def get_chat_response(user_message: str, rag_context: str = "", history: List[Dict] = []) -> str:
     messages = [{"role": "system", "content": "You are a helpful real estate assistant."}]
     for turn in history:
-        messages.append({"role": turn["role"], "content": turn["message"]})
+        # messages.append({"role": turn["role"], "content": turn["message"]})
+        messages.append({"role": turn["role"], "content": turn["content"]})
 
     # RAG + user message
     messages.append({"role": "user", "content": f"{rag_context}\n\n{user_message}"})
