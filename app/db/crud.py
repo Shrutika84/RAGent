@@ -46,3 +46,33 @@ def create_event(db: Session, event_data: dict):
 
 def get_events_for_user(db: Session, user_id: str):
     return db.query(models.CalendarEvent).filter(models.CalendarEvent.user_id == user_id).order_by(models.CalendarEvent.start_time).all()
+
+from app.db import models
+from sqlalchemy.orm import Session
+from datetime import datetime
+
+def save_conversation(db: Session, user_id: str, user_message: str, bot_response: str,
+                      topic: str, status: str, timestamp: datetime):
+    conversation = models.ConversationLog(
+        user_id=user_id,
+        role='user',  # or 'assistant' based on how you're saving — consider two separate inserts
+        message=user_message,
+        topic=topic,
+        status=status,
+        timestamp=timestamp
+    )
+    db.add(conversation)
+
+    # Optionally also log assistant reply
+    assistant_log = models.ConversationLog(
+        user_id=user_id,
+        role='assistant',
+        message=bot_response,
+        topic=topic,
+        status=status,
+        timestamp=timestamp
+    )
+    db.add(assistant_log)
+
+    db.commit()
+    return assistant_log  # or return both if you want

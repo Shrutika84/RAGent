@@ -19,7 +19,7 @@ def get_db():
     finally:
         db.close()
 
-
+# Tag inference
 def infer_tags(message: str):
     if "rent" in message.lower():
         return "Pricing", "Inquiring"
@@ -32,37 +32,47 @@ def infer_tags(message: str):
     else:
         return "General", "Unresolved"
 
+# Request model
 class ChatRequest(BaseModel):
     user_id: str
     message: str
     history: List[Dict] = []
 
 @router.post("/")
-async def chat_with_user(payload: ChatRequest, db: Session = Depends(get_db)):
-    rag_context = retrieve_relevant_chunks(payload.message)
+async def chat_with_agent(req: ChatRequest, db: Session = Depends(get_db)):
+    # 1. Extract message and prior history
+    user_message = req.message
+    user_id = req.user_id
+    prior_history = req.history
 
-    reply = get_chat_response(
-        user_message=payload.message,
-        rag_context=rag_context,
-        history=payload.history
+    # 2. Retrieve RAG context
+    rag_chunks = retrieve_relevant_chunks(user_message)
+    rag_context = "\n".join(rag_chunks)
+
+    # 3. Combine prompt with RAG and history
+    chat_prompt = f"User: {user_message}\n\nKnowledge Base:\n{rag_context}\n\nConversation History:\n{prior_history}"
+
+    # 4. Generate response from LLM
+    response = get_chat_response(chat_prompt)
+
+    # 5. Auto-tag conversation
+    topic, status = infer_tags(user_message)
+
+    # 6. Save message and response to DB
+    crud.save_conversation(
+        db=db,
+        user_id=user_id,
+        user_message=user_message,
+        bot_response=response,
+        topic=topic,
+        status=status,
+        timestamp=datetime.utcnow()
     )
-
-    topic, status = infer_tags(payload.message)
-
-    crud.log_message(db, payload.user_id, role="user", message=payload.message, topic=topic, status=status)
-    crud.log_message(db, payload.user_id, role="assistant", message=reply, topic=topic, status="Resolved")
-
-    # Calendar integration
-    events = crud.get_events_for_user(db, payload.user_id)
-    upcoming = [e for e in events if e.start_time > datetime.utcnow()]
-    event_list = "\n".join(
-        [f"- {e.title} at {e.start_time.strftime('%Y-%m-%d %H:%M')}" for e in upcoming[:3]]
-    )
-    reply_with_events = reply + (f"\n\n Upcoming Events:\n{event_list}" if upcoming else "")
 
     return {
-        "user_id": payload.user_id,
-        "message": payload.message,
-        "rag_context": rag_context,
-        "response": reply_with_events
+        "user_id": user_id,
+        "response": response,
+        "topic": topic,
+        "status": status,
+        "knowledge_used": rag_chunks
     }

@@ -7,6 +7,7 @@ from typing import List, Dict
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+print(client)
 def get_chat_response(user_message: str, rag_context: str = "", history: List[Dict] = []) -> str:
     messages = [{"role": "system", "content": "You are a helpful real estate assistant."}]
     for turn in history:
