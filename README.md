@@ -1,7 +1,7 @@
 # RAGent- Multi-Agentic Conversational AI System
 Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assistant to capture, store, and retrieve user information throughout the chat interaction.
 
-## 📊 Architecture (Mermaid)
+## 📊 System Architecture (Mermaid Diagram)
 
 <img width="3840" height="1714" alt="Untitled diagram _ Mermaid Chart-2025-07-13-204052" src="https://github.com/user-attachments/assets/eb61b363-035a-4df2-8645-4975d4d3d431" />
 
