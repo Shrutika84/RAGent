@@ -8,7 +8,7 @@ from app.llm import get_chat_response
 from app.rag import retrieve_relevant_chunks
 from app.db import crud
 from app.config import SessionLocal
-
+import time
 router = APIRouter()
 
 # DB session dependency
@@ -39,6 +39,7 @@ class ChatRequest(BaseModel):
 
 @router.post("/")
 async def chat_with_user(payload: ChatRequest, db: Session = Depends(get_db)):
+    start_time = time.time()  # Start timer
     rag_context = retrieve_relevant_chunks(payload.message)
 
     reply = get_chat_response(
@@ -59,10 +60,12 @@ async def chat_with_user(payload: ChatRequest, db: Session = Depends(get_db)):
         [f"- {e.title} at {e.start_time.strftime('%Y-%m-%d %H:%M')}" for e in upcoming[:3]]
     )
     reply_with_events = reply + (f"\n\n Upcoming Events:\n{event_list}" if upcoming else "")
+    duration = round(time.time() - start_time, 2)  # ⏱️ Add this line
 
     return {
         "user_id": payload.user_id,
         "message": payload.message,
         "rag_context": rag_context,
-        "response": reply_with_events
+        "response": reply_with_events,
+        "response_time": f"{duration} seconds"
     }
