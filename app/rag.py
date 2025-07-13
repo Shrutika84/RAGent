@@ -30,11 +30,8 @@ def row_to_text(row) -> str:
 def load_and_index_documents():
     # FAISS check
     os.makedirs(os.path.dirname(index_path), exist_ok=True)
-    csv_path = os.path.abspath(settings.DOC_EMBED_CSV)
-    print(f"📄 Loading CSV from: {csv_path}")
-    df = pd.read_csv(csv_path)
 
-    # df = pd.read_csv(settings.DOC_EMBED_CSV)
+    df = pd.read_csv(settings.DOC_EMBED_CSV)
     texts = df.apply(row_to_text, axis=1).tolist()
     embeddings = embedder.encode(texts, show_progress_bar=True)
 

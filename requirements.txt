@@ -15,4 +15,3 @@ uuid
 tqdm
 pytest
 langchain
-openai>=1.0.0
