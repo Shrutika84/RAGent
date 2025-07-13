@@ -2,7 +2,9 @@
 Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assistant to capture, store, and retrieve user information throughout the chat interaction.
 
 ## 📊 Architecture (Mermaid)
-  graph TD
+
+```mermaid
+graph TD
   subgraph Client
     U[User]
   end
@@ -26,7 +28,7 @@ Multi-Agentic Conversational AI System : A RAG + CRM-enabled conversational assi
 
   U --> CHAT
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 1. Clone the repository:
    ```bash
